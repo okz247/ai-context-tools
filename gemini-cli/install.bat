@@ -47,12 +47,12 @@ set "BG_COMMAND_STRING=cmd.exe /c \"powershell.exe -NoExit -Command \"\"Set-Loca
 echo Adding PowerShell context menu entries to the Windows Registry...
 
 :: Add context menu for right-clicking on a folder
-REG ADD "HKEY_CLASSES_ROOT\Directory\shell\OpenInGeminiCLI" /ve /d "Open in Gemini CLI" /f >nul
+REG ADD "HKEY_CLASSES_ROOT\Directory\shell\OpenInGeminiCLI" /ve /d "Open with Gemini CLI" /f >nul
 REG ADD "HKEY_CLASSES_ROOT\Directory\shell\OpenInGeminiCLI" /v "Icon" /d "%ICON_PATH%,0" /f >nul
 REG ADD "HKEY_CLASSES_ROOT\Directory\shell\OpenInGeminiCLI\command" /ve /d "%COMMAND_STRING%" /f >nul
 
 :: Add context menu for right-clicking on the background within a folder
-REG ADD "HKEY_CLASSES_ROOT\Directory\Background\shell\OpenInGeminiCLI" /ve /d "Open in Gemini CLI" /f >nul
+REG ADD "HKEY_CLASSES_ROOT\Directory\Background\shell\OpenInGeminiCLI" /ve /d "Open with Gemini CLI" /f >nul
 REG ADD "HKEY_CLASSES_ROOT\Directory\Background\shell\OpenInGeminiCLI" /v "Icon" /d "%ICON_PATH%,0" /f >nul
 REG ADD "HKEY_CLASSES_ROOT\Directory\Background\shell\OpenInGeminiCLI\command" /ve /d "%BG_COMMAND_STRING%" /f >nul
 
@@ -64,7 +64,7 @@ echo.
 :: 4. FINALIZING INSTALLATION
 :: ============================================================================
 echo ======================== INSTALLATION COMPLETE =======================
-echo The "Open in Gemini CLI" context menu has been installed.
+echo The "Open with Gemini CLI" context menu has been installed.
 echo.
 echo For the change to take effect, the Windows Explorer process
 echo must be restarted.

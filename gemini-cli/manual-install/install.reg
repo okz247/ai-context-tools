@@ -10,7 +10,7 @@ Windows Registry Editor Version 5.00
 
 ; For right-clicking on a folder
 [HKEY_CLASSES_ROOT\Directory\shell\OpenInGeminiCLI]
-@="Open in Gemini CLI"
+@="Open with Gemini CLI"
 "Icon"="C:\\path\\to\\your\\folder\\gemini.ico,0"
 
 [HKEY_CLASSES_ROOT\Directory\shell\OpenInGeminiCLI\command]
@@ -19,7 +19,7 @@ Windows Registry Editor Version 5.00
 
 ; For right-clicking on the background within a folder
 [HKEY_CLASSES_ROOT\Directory\Background\shell\OpenInGeminiCLI]
-@="Open in Gemini CLI"
+@="Open with Gemini CLI"
 "Icon"="C:\\path\\to\\your\\folder\\gemini.ico,0"
 
 [HKEY_CLASSES_ROOT\Directory\Background\shell\OpenInGeminiCLI\command]

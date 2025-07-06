@@ -1,6 +1,6 @@
 Windows Registry Editor Version 5.00
 
-; Removes the "Open in Gemini CLI" context menu entries.
+; Removes the "Open with Gemini CLI" context menu entries.
 
 [-HKEY_CLASSES_ROOT\Directory\shell\OpenInGeminiCLI]
 

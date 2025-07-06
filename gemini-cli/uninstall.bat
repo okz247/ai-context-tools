@@ -38,7 +38,7 @@ echo.
 :: 3. FINALIZING UNINSTALLATION
 :: ============================================================================
 echo ====================== UNINSTALLATION COMPLETE =====================
-echo The "Open in Gemini CLI" context menu has been removed.
+echo The "Open with Gemini CLI" context menu has been removed.
 echo.
 echo For the change to take full effect, the Windows Explorer process
 echo can be restarted.
