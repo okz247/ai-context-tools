@@ -1,0 +1,11 @@
+Windows Registry Editor Version 5.00
+
+; Remove folder context menu
+[-HKEY_CLASSES_ROOT\Directory\shell\OpenWithClaudeCode]
+
+; Remove background context menu
+[-HKEY_CLASSES_ROOT\Directory\Background\shell\OpenWithClaudeCode]
+
+; Remove per-user overrides if present
+[-HKEY_CURRENT_USER\Software\Classes\Directory\shell\OpenWithClaudeCode]
+[-HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\OpenWithClaudeCode]

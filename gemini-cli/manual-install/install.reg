@@ -1,0 +1,26 @@
+Windows Registry Editor Version 5.00
+
+; Adds a context menu item that opens PowerShell for Gemini CLI.
+;
+; INSTRUCTIONS:
+; 1. Before running, use Find and Replace (Ctrl+H) in your text editor.
+; 2. Replace all instances of "C:\\path\\to\\your\\folder" with the full
+;    path to the directory where you placed these files.
+; 3. REMEMBER to use double backslashes (\\) in your path!
+
+; For right-clicking on a folder
+[HKEY_CLASSES_ROOT\Directory\shell\OpenInGeminiCLI]
+@="Open in Gemini CLI"
+"Icon"="C:\\path\\to\\your\\folder\\gemini.ico,0"
+
+[HKEY_CLASSES_ROOT\Directory\shell\OpenInGeminiCLI\command]
+@="cmd.exe /c \"powershell.exe -NoExit -Command \\\"Set-Location -LiteralPath '%%1'; gemini\\\"\""
+
+
+; For right-clicking on the background within a folder
+[HKEY_CLASSES_ROOT\Directory\Background\shell\OpenInGeminiCLI]
+@="Open in Gemini CLI"
+"Icon"="C:\\path\\to\\your\\folder\\gemini.ico,0"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\OpenInGeminiCLI\command]
+@="cmd.exe /c \"powershell.exe -NoExit -Command \\\"Set-Location -LiteralPath '%V'; gemini\\\"\""
