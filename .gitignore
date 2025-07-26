@@ -1,0 +1,10 @@
+# Claude local settings
+.claude/settings.local.json
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,6 +1,6 @@
 # Changelog
 
-Refer to keepachangelog.md for guidelines
+Refer to changelog-ai-instructions.md for formatting guidelines
 
 ALL changes MUST be timestamped in eastern time using Time MCP Server.
 
