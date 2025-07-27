@@ -1,0 +1,21 @@
+Windows Registry Editor Version 5.00
+
+; Claude Code Context Menu Installation Template
+; Replace C:\\path\\to\\your\\folder with your actual installation path
+; Use double backslashes (\\) in paths
+
+; Add context menu for right-clicking on a folder
+[HKEY_CLASSES_ROOT\Directory\shell\OpenWithClaudeCode]
+@="Open with Claude Code"
+"Icon"="C:\\path\\to\\your\\folder\\claude.ico,0"
+
+[HKEY_CLASSES_ROOT\Directory\shell\OpenWithClaudeCode\command]
+@="C:\\path\\to\\your\\folder\\claude.bat \"%1\""
+
+; Add context menu for right-clicking on folder background
+[HKEY_CLASSES_ROOT\Directory\Background\shell\OpenWithClaudeCode]
+@="Open with Claude Code"
+"Icon"="C:\\path\\to\\your\\folder\\claude.ico,0"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\OpenWithClaudeCode\command]
+@="C:\\path\\to\\your\\folder\\claude.bat \"%V\""

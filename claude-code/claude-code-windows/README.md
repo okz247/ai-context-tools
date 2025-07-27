@@ -6,8 +6,8 @@ This tool adds "Open with Claude Code" to the Windows context menu, allowing you
 
 - **Native Windows Support**: Runs Claude Code directly without WSL
 - **Smart Terminal Detection**: Uses Windows Terminal if available, falls back to Command Prompt
-- **Easy Installation**: Run `install.bat` as Administrator
-- **Clean Uninstallation**: Run `uninstall.bat` as Administrator
+- **Easy Installation**: Run `smart-install.bat` (no admin required!)
+- **Clean Uninstallation**: Run `smart-uninstall.bat` (no admin required!)
 
 ## Requirements
 
@@ -22,7 +22,7 @@ This tool adds "Open with Claude Code" to the Windows context menu, allowing you
    npm install -g @anthropic-ai/claude-code
    ```
 
-2. Right-click `install.bat` and select "Run as administrator"
+2. Double-click `smart-install.bat` (no administrator privileges required!)
 
 3. The context menu will be added to:
    - Folder right-click menu
@@ -43,6 +43,6 @@ If Claude doesn't launch:
 
 - `claude.bat` - Main launcher script
 - `claude.ico` - Icon for context menu
-- `install.bat` - Installation script
-- `uninstall.bat` - Uninstallation script
-- `claude.bat.wsl-backup` - Original WSL-based version (backup)
+- `smart-install.bat` - Smart installation script (copies to AppData)
+- `smart-uninstall.bat` - Smart uninstallation script (removes from AppData)
+- `manual-install/` - Manual installation files for advanced users

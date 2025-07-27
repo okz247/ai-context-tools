@@ -49,13 +49,6 @@ if errorlevel 1 (
     exit /b 1
 )
 
-echo - uninstall.bat
-copy /Y "%SOURCE_DIR%\uninstall.bat" "%INSTALL_DIR%\" >nul
-if errorlevel 1 (
-    echo ERROR: Failed to copy uninstall.bat
-    pause
-    exit /b 1
-)
 
 echo - smart-install.bat (for future use)
 copy /Y "%~f0" "%INSTALL_DIR%\" >nul
