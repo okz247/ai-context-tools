@@ -21,8 +21,24 @@
       "Bash(git reset:*)",
       "Bash(git clean:*)",
       "Bash(gh:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Read(C:/Users/Omar/AppData/Local/ai-context-menu-tools/**)",
+      "Edit(C:/Users/Omar/AppData/Local/ai-context-menu-tools/**)",
+      "Bash(smart-install.bat)",
+      "Bash(.smart-install.bat)",
+      "Bash(cmd.exe:*)",
+      "Bash(start cmd /c smart-install.bat)",
+      "Bash(\"C:\\Users\\Omar\\AppData\\Local\\ai-context-menu-tools\\claude\\claude.bat\" \"C:\\Users\\Omar\\Documents\")",
+      "Bash(where:*)",
+      "Bash(del \"C:\\Users\\Omar\\AppData\\Local\\ai-context-menu-tools\\claude\\test-claude.bat\")",
+      "mcp__time__get_current_time",
+      "Bash(git commit:*)"
     ],
-    "deny": []
+    "deny": [
+      "Read(C:/Users/Omar/Desktop/**)",
+      "Read(C:/Users/Omar/Downloads/**)",
+      "Bash(cd /*)",
+      "Read(C:/Users/Omar/AppData/Local/**)"
+    ]
   }
 }
