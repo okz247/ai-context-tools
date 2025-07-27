@@ -1,12 +1,16 @@
 @echo off
-REM ABOUTME: Launches WSL in the selected folder and starts Claude Code CLI
-REM          Validates input and provides error handling for WSL/Claude startup
+REM ABOUTME: Launches Claude Code CLI directly in the selected folder on Windows
+REM          Validates input and provides error handling for Claude startup
 
-REM Check if WSL is available
-where wsl.exe >nul 2>nul
+REM Check if Claude CLI is available
+where claude >nul 2>nul
 if %errorlevel% neq 0 (
-    echo ERROR: WSL is not installed or not in PATH
-    echo Please install WSL from Microsoft Store or Windows Features
+    echo ERROR: Claude Code CLI not found in PATH
+    echo.
+    echo Please install Claude Code CLI using:
+    echo   npm install -g @anthropic-ai/claude-code
+    echo.
+    echo Visit: https://docs.anthropic.com/en/docs/claude-code
     pause
     exit /b 1
 )
@@ -25,6 +29,15 @@ if not exist "%~1" (
     exit /b 1
 )
 
-REM Launch WSL in the selected folder and start Claude, then keep the shell open
+REM Launch Claude Code in the selected folder
 echo Starting Claude Code in: %~1
-start "Claude Code" wsl.exe --cd "%~1" -e bash -ic "claude 2>/dev/null || (echo 'ERROR: Claude Code CLI not found. Please install Claude Code CLI in WSL.'; echo 'Visit: https://docs.anthropic.com/en/docs/claude-code'; read -p 'Press Enter to continue...'); exec bash"
+
+REM Check if Windows Terminal is available and use it, otherwise fall back to cmd
+where wt >nul 2>nul
+if %errorlevel% equ 0 (
+    REM Windows Terminal is available
+    start "Claude Code" wt -d "%~1" cmd /k claude
+) else (
+    REM Fall back to regular Command Prompt
+    start "Claude Code" cmd /k "cd /d "%~1" && claude || (echo. && echo ERROR: Failed to start Claude Code. && echo Please check your installation. && pause)"
+)
