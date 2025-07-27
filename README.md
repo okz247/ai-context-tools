@@ -8,13 +8,22 @@ Once you have Claude Code CLI or Gemini CLI installed, this adds context menu in
 1. Right-click any folder in Windows Explorer
 2. Select "Open with Claude Code" or "Open in Gemini CLI"
 
-### Key Differences Between Tools
+### Claude Code Variants
 
-**Claude Code:**
-- **No administrator privileges required** - installs to user profile (`%LOCALAPPDATA%`)
+This repository includes two Claude Code implementations:
+
+**1. Windows Native (`claude-code/claude-code-windows/`)**
 - **Native Windows execution** - runs in cmd.exe or Windows Terminal
-- **Smart installer** - copies files to AppData and creates user-level registry entries
-- **Known issue**: `smart-install.bat` tries to copy a non-existent `uninstall.bat` file
+- **No administrator privileges required** - installs to user profile (`%LOCALAPPDATA%`)
+- **Smart installer** - uses `smart-install.bat` to copy files to AppData
+
+**2. WSL Version (`claude-code/claude-code-wsl/`)**
+- **WSL execution** - launches Claude Code through Windows Subsystem for Linux
+- **Administrator required** - modifies system-wide registry
+- **Traditional installer** - uses `install.bat` and includes `uninstall.bat`
+- **For users who prefer WSL environment**
+
+### Gemini CLI
 
 **Gemini CLI:**
 - **Administrator required** - modifies system-wide registry (`HKEY_CLASSES_ROOT`)
@@ -42,18 +51,22 @@ Once you have Claude Code CLI or Gemini CLI installed, this adds context menu in
    - **For Gemini CLI**: Extract to a permanent location (registry points to this folder)
 
 2. **Choose Your Tool**
-   - For Claude Code: Go to the `claude-code` folder
+   - For Claude Code Windows Native: Go to `claude-code/claude-code-windows/`
+   - For Claude Code WSL Version: Go to `claude-code/claude-code-wsl/`
    - For Gemini CLI: Go to the `gemini-cli` folder
 
 3. **Run the Installer**
-   - **For Claude Code**: Double-click `smart-install.bat` (no admin required!)
+   - **For Claude Code Windows Native**: Double-click `smart-install.bat` (no admin required!)
+   - **For Claude Code WSL**: Right-click `install.bat` and select **"Run as administrator"**
    - **For Gemini CLI**: Right-click `install.bat` and select **"Run as administrator"**
    - Follow the prompts (restart Explorer when asked)
 
 ### Method 2: Manual Installation
 
 1. **Navigate to Manual Install Folder**
-   - Go to `claude-code/manual-install/` or `gemini-cli/manual-install/`
+   - For Claude Code Windows Native: Go to `claude-code/claude-code-windows/manual-install/`
+   - For Claude Code WSL: Go to `claude-code/claude-code-wsl/manual-install/`
+   - For Gemini CLI: Go to `gemini-cli/manual-install/`
 
 2. **For Claude Code**
    - Copy `install.reg.template` to `install.reg`
@@ -72,9 +85,11 @@ Once you have Claude Code CLI or Gemini CLI installed, this adds context menu in
 ## Uninstalling
 
 ### Automatic Method
-- **For Claude Code**: 
+- **For Claude Code Windows Native**: 
   - Run `smart-uninstall.bat` from the original source folder (no admin required)
   - This removes registry entries and optionally deletes the AppData installation
+- **For Claude Code WSL**: 
+  - Right-click `uninstall.bat` and select **"Run as administrator"**
 - **For Gemini CLI**: 
   - Right-click `uninstall.bat` and select **"Run as administrator"**
 
@@ -86,9 +101,9 @@ Once you have Claude Code CLI or Gemini CLI installed, this adds context menu in
 ### Installation Issues
 - **"This app can't run on your PC"**: Right-click and choose "Run as administrator" (Gemini only)
 - **No menu appears**: Restart Windows Explorer or reboot your computer
-- **Claude Code smart-install.bat errors**: The installer tries to copy `uninstall.bat` which doesn't exist - this error can be ignored
 - **Moved folder after installation**: 
-  - **Claude Code**: No issue - files are copied to AppData
+  - **Claude Code Windows Native**: No issue - files are copied to AppData
+  - **Claude Code WSL**: Must reinstall from new location
   - **Gemini CLI**: Must reinstall from new location
 
 ### Runtime Issues  
