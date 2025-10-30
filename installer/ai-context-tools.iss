@@ -26,7 +26,6 @@ Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
 PrivilegesRequired=admin
-ArchitecturesInstallIn64BitMode=x64compatible
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -68,53 +67,113 @@ Source: "..\codex-cli\codex-wsl.bat"; DestDir: "{app}\codex-wsl"; Flags: ignorev
 Source: "..\codex-cli\codex.ico"; DestDir: "{app}\codex-wsl"; Flags: ignoreversion skipifsourcedoesntexist; Components: codex_wsl
 
 [Registry]
-; Claude Code (Windows Native) - HKCU for current user
-Root: HKCU; Subkey: "Software\Classes\Directory\shell\OpenWithClaudeCode"; ValueType: string; ValueName: ""; ValueData: "Open with Claude Code"; Flags: uninsdeletekey; Components: claude_windows
-Root: HKCU; Subkey: "Software\Classes\Directory\shell\OpenWithClaudeCode"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-windows\claude.ico,0"; Components: claude_windows
-Root: HKCU; Subkey: "Software\Classes\Directory\shell\OpenWithClaudeCode\command"; ValueType: string; ValueName: ""; ValueData: """{app}\claude-windows\claude.bat"" ""%1"""; Components: claude_windows
-Root: HKCU; Subkey: "Software\Classes\Directory\Background\shell\OpenWithClaudeCode"; ValueType: string; ValueName: ""; ValueData: "Open with Claude Code"; Flags: uninsdeletekey; Components: claude_windows
-Root: HKCU; Subkey: "Software\Classes\Directory\Background\shell\OpenWithClaudeCode"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-windows\claude.ico,0"; Components: claude_windows
-Root: HKCU; Subkey: "Software\Classes\Directory\Background\shell\OpenWithClaudeCode\command"; ValueType: string; ValueName: ""; ValueData: """{app}\claude-windows\claude.bat"" ""%V"""; Components: claude_windows
+; ========== AI TOOLS SUBMENU FOR FOLDERS ==========
+; Create "AI Tools" parent menu for folders
+Root: HKCR; Subkey: "Directory\shell\AITools"; ValueType: string; ValueName: "MUIVerb"; ValueData: "AI Tools"; Flags: uninsdeletekey
+Root: HKCR; Subkey: "Directory\shell\AITools"; ValueType: string; ValueName: "SubCommands"; ValueData: ""
+Root: HKCR; Subkey: "Directory\shell\AITools"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-windows\claude.ico,0"
 
-; Claude Code (WSL) - HKCR for all users
-Root: HKCR; Subkey: "Directory\shell\OpenWithClaudeCodeWSL"; ValueType: string; ValueName: ""; ValueData: "Open with Claude Code (WSL)"; Flags: uninsdeletekey; Components: claude_wsl
-Root: HKCR; Subkey: "Directory\shell\OpenWithClaudeCodeWSL"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-wsl\claude.ico,0"; Components: claude_wsl
-Root: HKCR; Subkey: "Directory\shell\OpenWithClaudeCodeWSL\command"; ValueType: string; ValueName: ""; ValueData: """{app}\claude-wsl\claude.bat"" ""%1"""; Components: claude_wsl
-Root: HKCR; Subkey: "Directory\Background\shell\OpenWithClaudeCodeWSL"; ValueType: string; ValueName: ""; ValueData: "Open with Claude Code (WSL)"; Flags: uninsdeletekey; Components: claude_wsl
-Root: HKCR; Subkey: "Directory\Background\shell\OpenWithClaudeCodeWSL"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-wsl\claude.ico,0"; Components: claude_wsl
-Root: HKCR; Subkey: "Directory\Background\shell\OpenWithClaudeCodeWSL\command"; ValueType: string; ValueName: ""; ValueData: """{app}\claude-wsl\claude.bat"" ""%V"""; Components: claude_wsl
+; Claude Code (Windows)
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\ClaudeCode"; ValueType: string; ValueName: ""; ValueData: "Claude Code"; Components: claude_windows
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\ClaudeCode"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-windows\claude.ico,0"; Components: claude_windows
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\ClaudeCode\command"; ValueType: string; ValueName: ""; ValueData: """{app}\claude-windows\claude.bat"" ""%1"""; Components: claude_windows
 
-; Gemini CLI (Windows Native)
-Root: HKCR; Subkey: "Directory\shell\OpenInGeminiCLI"; ValueType: string; ValueName: ""; ValueData: "Open with Gemini CLI"; Flags: uninsdeletekey; Components: gemini_windows
-Root: HKCR; Subkey: "Directory\shell\OpenInGeminiCLI"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\gemini-windows\gemini.ico,0"; Components: gemini_windows
-Root: HKCR; Subkey: "Directory\shell\OpenInGeminiCLI\command"; ValueType: string; ValueName: ""; ValueData: "cmd.exe /c ""powershell.exe -NoExit -Command """"Set-Location -LiteralPath '%1'; gemini"""""""; Components: gemini_windows
-Root: HKCR; Subkey: "Directory\Background\shell\OpenInGeminiCLI"; ValueType: string; ValueName: ""; ValueData: "Open with Gemini CLI"; Flags: uninsdeletekey; Components: gemini_windows
-Root: HKCR; Subkey: "Directory\Background\shell\OpenInGeminiCLI"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\gemini-windows\gemini.ico,0"; Components: gemini_windows
-Root: HKCR; Subkey: "Directory\Background\shell\OpenInGeminiCLI\command"; ValueType: string; ValueName: ""; ValueData: "cmd.exe /c ""powershell.exe -NoExit -Command """"Set-Location -LiteralPath '%V'; gemini"""""""; Components: gemini_windows
+; Claude Code (WSL)
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\ClaudeCodeWSL"; ValueType: string; ValueName: ""; ValueData: "Claude Code (WSL)"; Components: claude_wsl
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\ClaudeCodeWSL"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-wsl\claude.ico,0"; Components: claude_wsl
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\ClaudeCodeWSL\command"; ValueType: string; ValueName: ""; ValueData: """{app}\claude-wsl\claude.bat"" ""%1"""; Components: claude_wsl
+
+; Gemini CLI (Windows)
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\GeminiCLI"; ValueType: string; ValueName: ""; ValueData: "Gemini CLI"; Components: gemini_windows
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\GeminiCLI"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\gemini-windows\gemini.ico,0"; Components: gemini_windows
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\GeminiCLI\command"; ValueType: string; ValueName: ""; ValueData: "cmd.exe /c ""powershell.exe -NoExit -Command """"Set-Location -LiteralPath '%1'; gemini"""""""; Components: gemini_windows
 
 ; Gemini CLI (WSL)
-Root: HKCR; Subkey: "Directory\shell\OpenInGeminiCLIWSL"; ValueType: string; ValueName: ""; ValueData: "Open with Gemini CLI (WSL)"; Flags: uninsdeletekey; Components: gemini_wsl
-Root: HKCR; Subkey: "Directory\shell\OpenInGeminiCLIWSL"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\gemini-wsl\gemini.ico,0"; Components: gemini_wsl
-Root: HKCR; Subkey: "Directory\shell\OpenInGeminiCLIWSL\command"; ValueType: string; ValueName: ""; ValueData: """{app}\gemini-wsl\gemini-wsl.bat"" ""%1"""; Components: gemini_wsl
-Root: HKCR; Subkey: "Directory\Background\shell\OpenInGeminiCLIWSL"; ValueType: string; ValueName: ""; ValueData: "Open with Gemini CLI (WSL)"; Flags: uninsdeletekey; Components: gemini_wsl
-Root: HKCR; Subkey: "Directory\Background\shell\OpenInGeminiCLIWSL"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\gemini-wsl\gemini.ico,0"; Components: gemini_wsl
-Root: HKCR; Subkey: "Directory\Background\shell\OpenInGeminiCLIWSL\command"; ValueType: string; ValueName: ""; ValueData: """{app}\gemini-wsl\gemini-wsl.bat"" ""%V"""; Components: gemini_wsl
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\GeminiCLIWSL"; ValueType: string; ValueName: ""; ValueData: "Gemini CLI (WSL)"; Components: gemini_wsl
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\GeminiCLIWSL"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\gemini-wsl\gemini.ico,0"; Components: gemini_wsl
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\GeminiCLIWSL\command"; ValueType: string; ValueName: ""; ValueData: """{app}\gemini-wsl\gemini-wsl.bat"" ""%1"""; Components: gemini_wsl
 
-; Codex CLI (Windows Native)
-Root: HKCR; Subkey: "Directory\shell\OpenWithCodex"; ValueType: string; ValueName: ""; ValueData: "Open with Codex"; Flags: uninsdeletekey; Components: codex_windows
-Root: HKCR; Subkey: "Directory\shell\OpenWithCodex"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\codex-windows\codex.ico,0"; Components: codex_windows
-Root: HKCR; Subkey: "Directory\shell\OpenWithCodex\command"; ValueType: string; ValueName: ""; ValueData: """{app}\codex-windows\codex.bat"" ""%1"""; Components: codex_windows
-Root: HKCR; Subkey: "Directory\Background\shell\OpenWithCodex"; ValueType: string; ValueName: ""; ValueData: "Open with Codex"; Flags: uninsdeletekey; Components: codex_windows
-Root: HKCR; Subkey: "Directory\Background\shell\OpenWithCodex"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\codex-windows\codex.ico,0"; Components: codex_windows
-Root: HKCR; Subkey: "Directory\Background\shell\OpenWithCodex\command"; ValueType: string; ValueName: ""; ValueData: """{app}\codex-windows\codex.bat"" ""%V"""; Components: codex_windows
+; Codex (Windows)
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\Codex"; ValueType: string; ValueName: ""; ValueData: "Codex"; Components: codex_windows
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\Codex"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\codex-windows\codex.ico,0"; Components: codex_windows
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\Codex\command"; ValueType: string; ValueName: ""; ValueData: """{app}\codex-windows\codex.bat"" ""%1"""; Components: codex_windows
 
-; Codex CLI (WSL)
-Root: HKCR; Subkey: "Directory\shell\OpenWithCodexWSL"; ValueType: string; ValueName: ""; ValueData: "Open with Codex (WSL)"; Flags: uninsdeletekey; Components: codex_wsl
-Root: HKCR; Subkey: "Directory\shell\OpenWithCodexWSL"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\codex-wsl\codex.ico,0"; Components: codex_wsl
-Root: HKCR; Subkey: "Directory\shell\OpenWithCodexWSL\command"; ValueType: string; ValueName: ""; ValueData: """{app}\codex-wsl\codex-wsl.bat"" ""%1"""; Components: codex_wsl
-Root: HKCR; Subkey: "Directory\Background\shell\OpenWithCodexWSL"; ValueType: string; ValueName: ""; ValueData: "Open with Codex (WSL)"; Flags: uninsdeletekey; Components: codex_wsl
-Root: HKCR; Subkey: "Directory\Background\shell\OpenWithCodexWSL"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\codex-wsl\codex.ico,0"; Components: codex_wsl
-Root: HKCR; Subkey: "Directory\Background\shell\OpenWithCodexWSL\command"; ValueType: string; ValueName: ""; ValueData: """{app}\codex-wsl\codex-wsl.bat"" ""%V"""; Components: codex_wsl
+; Codex (WSL)
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\CodexWSL"; ValueType: string; ValueName: ""; ValueData: "Codex (WSL)"; Components: codex_wsl
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\CodexWSL"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\codex-wsl\codex.ico,0"; Components: codex_wsl
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\CodexWSL\command"; ValueType: string; ValueName: ""; ValueData: """{app}\codex-wsl\codex-wsl.bat"" ""%1"""; Components: codex_wsl
+
+; ========== AI TOOLS SUBMENU FOR DIRECTORY BACKGROUND ==========
+; Create "AI Tools" parent menu for folder backgrounds
+Root: HKCR; Subkey: "Directory\Background\shell\AITools"; ValueType: string; ValueName: "MUIVerb"; ValueData: "AI Tools"; Flags: uninsdeletekey
+Root: HKCR; Subkey: "Directory\Background\shell\AITools"; ValueType: string; ValueName: "SubCommands"; ValueData: ""
+Root: HKCR; Subkey: "Directory\Background\shell\AITools"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-windows\claude.ico,0"
+
+; Claude Code (Windows)
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\ClaudeCode"; ValueType: string; ValueName: ""; ValueData: "Claude Code"; Components: claude_windows
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\ClaudeCode"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-windows\claude.ico,0"; Components: claude_windows
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\ClaudeCode\command"; ValueType: string; ValueName: ""; ValueData: """{app}\claude-windows\claude.bat"" ""%V"""; Components: claude_windows
+
+; Claude Code (WSL)
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\ClaudeCodeWSL"; ValueType: string; ValueName: ""; ValueData: "Claude Code (WSL)"; Components: claude_wsl
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\ClaudeCodeWSL"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-wsl\claude.ico,0"; Components: claude_wsl
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\ClaudeCodeWSL\command"; ValueType: string; ValueName: ""; ValueData: """{app}\claude-wsl\claude.bat"" ""%V"""; Components: claude_wsl
+
+; Gemini CLI (Windows)
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\GeminiCLI"; ValueType: string; ValueName: ""; ValueData: "Gemini CLI"; Components: gemini_windows
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\GeminiCLI"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\gemini-windows\gemini.ico,0"; Components: gemini_windows
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\GeminiCLI\command"; ValueType: string; ValueName: ""; ValueData: "cmd.exe /c ""powershell.exe -NoExit -Command """"Set-Location -LiteralPath '%V'; gemini"""""""; Components: gemini_windows
+
+; Gemini CLI (WSL)
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\GeminiCLIWSL"; ValueType: string; ValueName: ""; ValueData: "Gemini CLI (WSL)"; Components: gemini_wsl
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\GeminiCLIWSL"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\gemini-wsl\gemini.ico,0"; Components: gemini_wsl
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\GeminiCLIWSL\command"; ValueType: string; ValueName: ""; ValueData: """{app}\gemini-wsl\gemini-wsl.bat"" ""%V"""; Components: gemini_wsl
+
+; Codex (Windows)
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\Codex"; ValueType: string; ValueName: ""; ValueData: "Codex"; Components: codex_windows
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\Codex"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\codex-windows\codex.ico,0"; Components: codex_windows
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\Codex\command"; ValueType: string; ValueName: ""; ValueData: """{app}\codex-windows\codex.bat"" ""%V"""; Components: codex_windows
+
+; Codex (WSL)
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\CodexWSL"; ValueType: string; ValueName: ""; ValueData: "Codex (WSL)"; Components: codex_wsl
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\CodexWSL"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\codex-wsl\codex.ico,0"; Components: codex_wsl
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\CodexWSL\command"; ValueType: string; ValueName: ""; ValueData: """{app}\codex-wsl\codex-wsl.bat"" ""%V"""; Components: codex_wsl
+
+; ========== AI TOOLS SUBMENU FOR FILES ==========
+; Create "AI Tools" parent menu for files
+Root: HKCR; Subkey: "*\shell\AITools"; ValueType: string; ValueName: "MUIVerb"; ValueData: "AI Tools"; Flags: uninsdeletekey
+Root: HKCR; Subkey: "*\shell\AITools"; ValueType: string; ValueName: "SubCommands"; ValueData: ""
+Root: HKCR; Subkey: "*\shell\AITools"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-windows\claude.ico,0"
+
+; Claude Code (Windows)
+Root: HKCR; Subkey: "*\shell\AITools\shell\ClaudeCode"; ValueType: string; ValueName: ""; ValueData: "Claude Code"; Components: claude_windows
+Root: HKCR; Subkey: "*\shell\AITools\shell\ClaudeCode"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-windows\claude.ico,0"; Components: claude_windows
+Root: HKCR; Subkey: "*\shell\AITools\shell\ClaudeCode\command"; ValueType: string; ValueName: ""; ValueData: """{app}\claude-windows\claude.bat"" ""%1"""; Components: claude_windows
+
+; Claude Code (WSL)
+Root: HKCR; Subkey: "*\shell\AITools\shell\ClaudeCodeWSL"; ValueType: string; ValueName: ""; ValueData: "Claude Code (WSL)"; Components: claude_wsl
+Root: HKCR; Subkey: "*\shell\AITools\shell\ClaudeCodeWSL"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-wsl\claude.ico,0"; Components: claude_wsl
+Root: HKCR; Subkey: "*\shell\AITools\shell\ClaudeCodeWSL\command"; ValueType: string; ValueName: ""; ValueData: """{app}\claude-wsl\claude.bat"" ""%1"""; Components: claude_wsl
+
+; Gemini CLI (Windows)
+Root: HKCR; Subkey: "*\shell\AITools\shell\GeminiCLI"; ValueType: string; ValueName: ""; ValueData: "Gemini CLI"; Components: gemini_windows
+Root: HKCR; Subkey: "*\shell\AITools\shell\GeminiCLI"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\gemini-windows\gemini.ico,0"; Components: gemini_windows
+Root: HKCR; Subkey: "*\shell\AITools\shell\GeminiCLI\command"; ValueType: string; ValueName: ""; ValueData: "cmd.exe /c ""powershell.exe -NoExit -Command """"Set-Location -LiteralPath '%1'; gemini"""""""; Components: gemini_windows
+
+; Gemini CLI (WSL)
+Root: HKCR; Subkey: "*\shell\AITools\shell\GeminiCLIWSL"; ValueType: string; ValueName: ""; ValueData: "Gemini CLI (WSL)"; Components: gemini_wsl
+Root: HKCR; Subkey: "*\shell\AITools\shell\GeminiCLIWSL"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\gemini-wsl\gemini.ico,0"; Components: gemini_wsl
+Root: HKCR; Subkey: "*\shell\AITools\shell\GeminiCLIWSL\command"; ValueType: string; ValueName: ""; ValueData: """{app}\gemini-wsl\gemini-wsl.bat"" ""%1"""; Components: gemini_wsl
+
+; Codex (Windows)
+Root: HKCR; Subkey: "*\shell\AITools\shell\Codex"; ValueType: string; ValueName: ""; ValueData: "Codex"; Components: codex_windows
+Root: HKCR; Subkey: "*\shell\AITools\shell\Codex"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\codex-windows\codex.ico,0"; Components: codex_windows
+Root: HKCR; Subkey: "*\shell\AITools\shell\Codex\command"; ValueType: string; ValueName: ""; ValueData: """{app}\codex-windows\codex.bat"" ""%1"""; Components: codex_windows
+
+; Codex (WSL)
+Root: HKCR; Subkey: "*\shell\AITools\shell\CodexWSL"; ValueType: string; ValueName: ""; ValueData: "Codex (WSL)"; Components: codex_wsl
+Root: HKCR; Subkey: "*\shell\AITools\shell\CodexWSL"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\codex-wsl\codex.ico,0"; Components: codex_wsl
+Root: HKCR; Subkey: "*\shell\AITools\shell\CodexWSL\command"; ValueType: string; ValueName: ""; ValueData: """{app}\codex-wsl\codex-wsl.bat"" ""%1"""; Components: codex_wsl
 
 [Code]
 var
@@ -132,22 +191,41 @@ begin
 end;
 
 procedure InitializeWizard();
+var
+  DetectionMsg: String;
 begin
   // Detect installed AI CLIs
   ClaudeDetected := CheckCommandExists('claude');
   GeminiDetected := CheckCommandExists('gemini');
   CodexDetected := CheckCommandExists('codex');
 
+  // Build detection message
+  DetectionMsg := 'The installer has detected the following AI tools on your system:' + #13#10 + #13#10;
+
+  if ClaudeDetected then
+    DetectionMsg := DetectionMsg + '• Claude Code CLI: FOUND ✓' + #13#10
+  else
+    DetectionMsg := DetectionMsg + '• Claude Code CLI: NOT FOUND ✗' + #13#10;
+
+  if GeminiDetected then
+    DetectionMsg := DetectionMsg + '• Gemini CLI: FOUND ✓' + #13#10
+  else
+    DetectionMsg := DetectionMsg + '• Gemini CLI: NOT FOUND ✗' + #13#10;
+
+  if CodexDetected then
+    DetectionMsg := DetectionMsg + '• Codex CLI: FOUND ✓' + #13#10
+  else
+    DetectionMsg := DetectionMsg + '• Codex CLI: NOT FOUND ✗' + #13#10;
+
+  DetectionMsg := DetectionMsg + #13#10 +
+    'You can still install context menu entries for tools that are not yet installed. ' +
+    'Just make sure to install the CLI tool later using npm or your package manager.';
+
   // Create detection results page
   DetectionPage := CreateOutputMsgPage(wpWelcome,
     'AI Tool Detection',
     'Scanning for installed AI assistants...',
-    'The installer has detected the following AI tools on your system:' + #13#10 + #13#10 +
-    '• Claude Code CLI: ' + BoolToStr(ClaudeDetected, 'FOUND ✓', 'NOT FOUND ✗') + #13#10 +
-    '• Gemini CLI: ' + BoolToStr(GeminiDetected, 'FOUND ✓', 'NOT FOUND ✗') + #13#10 +
-    '• Codex CLI: ' + BoolToStr(CodexDetected, 'FOUND ✓', 'NOT FOUND ✗') + #13#10 + #13#10 +
-    'You can still install context menu entries for tools that are not yet installed. ' +
-    'Just make sure to install the CLI tool later using npm or your package manager.'
+    DetectionMsg
   );
 end;
 
