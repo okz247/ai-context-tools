@@ -46,19 +46,23 @@ if exist "%~1\" (
     echo In directory: %~dp1
 )
 
-REM Launch Claude Code
+REM Launch Claude Code with file context
 where wt >nul 2>nul
 if %errorlevel% equ 0 (
     REM Windows Terminal is available
     if defined FILE_ARG (
-        start "Claude Code" wt -d "%WORK_DIR%" cmd /k "claude && echo. && echo File: %FILE_ARG%"
+        REM Pass filename to Claude via environment variable for safety
+        set "FILENAME=%FILE_ARG%"
+        start "Claude Code" wt -d "%WORK_DIR%" cmd /k "claude \"Wait for my next command about %%FILENAME%%\""
     ) else (
         start "Claude Code" wt -d "%WORK_DIR%" cmd /k claude
     )
 ) else (
     REM Fall back to regular Command Prompt
     if defined FILE_ARG (
-        start "Claude Code" cmd /k "cd /d "%WORK_DIR%" && claude && echo. && echo File: %FILE_ARG%"
+        REM Pass filename to Claude via environment variable for safety
+        set "FILENAME=%FILE_ARG%"
+        start "Claude Code" cmd /k "cd /d "%WORK_DIR%" && claude \"Wait for my next command about %%FILENAME%%\""
     ) else (
         start "Claude Code" cmd /k "cd /d "%WORK_DIR%" && claude"
     )

@@ -186,8 +186,16 @@ function CheckCommandExists(Command: String): Boolean;
 var
   ResultCode: Integer;
 begin
-  Result := Exec('cmd.exe', '/c "' + Command + ' --version >nul 2>&1"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-  Result := Result and (ResultCode = 0);
+  // Try using 'where' command to check if the command is in PATH
+  Result := Exec('cmd.exe', '/c "where ' + Command + ' >nul 2>&1"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  if not Result or (ResultCode <> 0) then
+  begin
+    // Fallback: Try running the command with --version
+    Result := Exec('cmd.exe', '/c "' + Command + ' --version >nul 2>&1"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+    Result := Result and (ResultCode = 0);
+  end
+  else
+    Result := True;
 end;
 
 procedure InitializeWizard();

@@ -17,8 +17,11 @@ if not exist "%~1" (
 REM Determine if input is a file or folder
 if exist "%~1\" (
     REM It's a directory
-    wt.exe -d "%~1" powershell.exe -NoExit -Command "codex"
+    set "TARGET_DIR=%~1"
+    wt.exe -d "%TARGET_DIR%" powershell.exe -NoExit -Command "codex"
 ) else (
-    REM It's a file - open in parent directory
-    wt.exe -d "%~dp1" powershell.exe -NoExit -Command "Write-Host 'File: %~nx1'; codex"
+    REM It's a file - pass filename to Codex via environment variable for safety
+    set "TARGET_DIR=%~dp1"
+    set "FILENAME=%~nx1"
+    wt.exe -d "%TARGET_DIR%" powershell.exe -NoExit -Command "codex \"Wait for my next command about $env:FILENAME\""
 )

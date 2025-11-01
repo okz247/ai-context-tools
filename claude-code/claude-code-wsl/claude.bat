@@ -29,10 +29,12 @@ REM Determine if input is a file or folder
 if exist "%~1\" (
     REM It's a directory
     echo Starting Claude Code in folder: %~1
-    start "Claude Code" wsl.exe --cd "%~1" -e bash -ic "claude 2>/dev/null || (echo 'ERROR: Claude Code CLI not found. Please install Claude Code CLI in WSL.'; echo 'Visit: https://docs.anthropic.com/en/docs/claude-code'; read -p 'Press Enter to continue...'); exec bash"
+    start "Claude Code" wsl.exe --cd "%~1" -e bash -ic "claude 2>/dev/null || (echo \"ERROR: Claude Code CLI not found. Please install Claude Code CLI in WSL.\"; echo \"Visit: https://docs.anthropic.com/en/docs/claude-code\"; read -p \"Press Enter to continue...\"); exec bash"
 ) else (
-    REM It's a file - open in parent directory
+    REM It's a file - pass filename to Claude with instruction
     echo Starting Claude Code with file: %~nx1
     echo In directory: %~dp1
-    start "Claude Code" wsl.exe --cd "%~dp1" -e bash -ic "echo 'File: %~nx1'; claude 2>/dev/null || (echo 'ERROR: Claude Code CLI not found. Please install Claude Code CLI in WSL.'; echo 'Visit: https://docs.anthropic.com/en/docs/claude-code'; read -p 'Press Enter to continue...'); exec bash"
+    set "FILENAME=%~nx1"
+    set "WSLENV=FILENAME/u"
+    start "Claude Code" wsl.exe --cd "%~dp1" -e bash -ic "claude \"Wait for my next command about \$FILENAME\" 2>/dev/null || (echo \"ERROR: Claude Code CLI not found. Please install Claude Code CLI in WSL.\"; echo \"Visit: https://docs.anthropic.com/en/docs/claude-code\"; read -p \"Press Enter to continue...\"); exec bash"
 )

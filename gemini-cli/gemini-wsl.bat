@@ -40,7 +40,9 @@ for %%i in (a b c d e f g h i j k l m n o p q r s t u v w x y z) do (
 
 REM Launch Gemini in WSL
 if defined FILENAME (
-    wsl.exe bash -c "cd '%WSL_PATH%' && echo 'File: %FILENAME%' && gemini"
+    set "WSLENV=FILENAME/u:WSL_PATH/u"
+    wsl.exe bash -c "cd \"$WSL_PATH\" && gemini \"Wait for my next command about $FILENAME\""
 ) else (
-    wsl.exe bash -c "cd '%WSL_PATH%' && gemini"
+    set "WSLENV=WSL_PATH/u"
+    wsl.exe bash -c "cd \"$WSL_PATH\" && gemini"
 )
