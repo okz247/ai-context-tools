@@ -300,7 +300,8 @@ begin
               'Restart Explorer now?', mbConfirmation, MB_YESNO) = IDYES then
     begin
       Exec('taskkill.exe', '/f /im explorer.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-      Exec('explorer.exe', '', '', SW_SHOW, ewNoWait, ResultCode);
+      Sleep(1000);  // Wait 1 second for Explorer to fully terminate
+      Exec('cmd.exe', '/c start explorer.exe', '', SW_HIDE, ewNoWait, ResultCode);
     end;
   end;
 end;
