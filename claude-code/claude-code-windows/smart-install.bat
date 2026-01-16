@@ -49,6 +49,14 @@ if errorlevel 1 (
     exit /b 1
 )
 
+echo - smart-uninstall.bat
+copy /Y "%SOURCE_DIR%\smart-uninstall.bat" "%INSTALL_DIR%\" >nul
+if errorlevel 1 (
+    echo ERROR: Failed to copy smart-uninstall.bat
+    pause
+    exit /b 1
+)
+
 
 echo - smart-install.bat (for future use)
 copy /Y "%~f0" "%INSTALL_DIR%\" >nul
@@ -94,6 +102,6 @@ echo %INSTALL_DIR%
 echo.
 echo You can now right-click on any folder to open it with Claude Code.
 echo.
-echo To uninstall, run: %INSTALL_DIR%\uninstall.bat
+echo To uninstall, run: %INSTALL_DIR%\smart-uninstall.bat
 echo.
 pause

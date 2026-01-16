@@ -44,7 +44,7 @@ Name: "codex_wsl"; Description: "Codex CLI (WSL) - For Windows Subsystem for Lin
 
 [Files]
 ; Always-installed generic icon for parent "AI Tools" menu
-Source: "..\gemini-cli\gemini.ico"; DestDir: "{app}"; DestName: "ai-tools.ico"; Flags: ignoreversion
+Source: "..\claude-code\claude-code-windows\claude.ico"; DestDir: "{app}"; DestName: "ai-tools.ico"; Flags: ignoreversion
 
 ; Claude Windows Native
 Source: "..\claude-code\claude-code-windows\claude.bat"; DestDir: "{app}\claude-windows"; Flags: ignoreversion; Components: claude_windows
@@ -186,6 +186,14 @@ var
   CodexDetected: Boolean;
   DetectionPage: TOutputMsgWizardPage;
 
+const
+  SHCNE_ASSOCCHANGED = $08000000;
+  SHCNF_IDLIST = $0000;
+  SHCNF_FLUSHNOWAIT = $2000;
+
+procedure SHChangeNotify(wEventID: Integer; uFlags: Cardinal; dwItem1, dwItem2: Cardinal);
+  external 'SHChangeNotify@shell32.dll stdcall';
+
 function CheckCommandExists(Command: String): Boolean;
 var
   ResultCode: Integer;
@@ -293,19 +301,73 @@ begin
   end;
 end;
 
+procedure RefreshExplorerShell;
+begin
+  // Updates shell caches so context menu changes show up without restarting Explorer.
+  // For SHCNE_ASSOCCHANGED: dwItem1/dwItem2 must be NULL and SHCNF_IDLIST must be used.
+  SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST or SHCNF_FLUSHNOWAIT, 0, 0);
+end;
+
 procedure CurStepChanged(CurStep: TSetupStep);
 var
   ResultCode: Integer;
+  ErrorCode: Integer;
+  Started: Boolean;
 begin
   if CurStep = ssPostInstall then
   begin
-    // Refresh Windows Explorer to show new context menu items
-    if MsgBox('Installation complete! Windows Explorer needs to be restarted to show the new context menu items.' + #13#10 + #13#10 +
-              'Restart Explorer now?', mbConfirmation, MB_YESNO) = IDYES then
-    begin
-      Exec('taskkill.exe', '/f /im explorer.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-      Sleep(1000);  // Wait 1 second for Explorer to fully terminate
-      Exec('cmd.exe', '/c start explorer.exe', '', SW_HIDE, ewNoWait, ResultCode);
+    // Apply changes so new context menu items appear.
+    // Restarting Explorer is a heavy-handed approach and can fail to relaunch when Setup is elevated.
+    // Offer a safe refresh first, with restart only as a fallback.
+    case MsgBox(
+      'Installation complete!' + #13#10 + #13#10 +
+      'To show the new context menu items, choose an option:' + #13#10 + #13#10 +
+      'YES = Refresh Explorer (recommended, no restart)' + #13#10 +
+      'NO  = Restart Explorer (may close your open windows)' + #13#10 +
+      'CANCEL = Do nothing (you can log off/restart later)',
+      mbConfirmation, MB_YESNOCANCEL) of
+      IDYES:
+        begin
+          RefreshExplorerShell;
+        end;
+      IDNO:
+        begin
+          Exec('taskkill.exe', '/f /im explorer.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+          Sleep(1000);  // Wait 1 second for Explorer to fully terminate
+          // Try to relaunch Explorer in the original (non-admin) user context.
+          Started := False;
+          ErrorCode := 0;
+          try
+            Started := ExecAsOriginalUser(ExpandConstant('{sys}\explorer.exe'), '', '', SW_SHOWNORMAL, ewNoWait, ResultCode);
+          except
+            Started := False;
+          end;
+
+          if not Started then
+          begin
+            // Alternative original-user launch via ShellExecute (sometimes behaves better for Explorer).
+            try
+              Started := ShellExecAsOriginalUser('open', ExpandConstant('{sys}\explorer.exe'), '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
+            except
+              Started := False;
+            end;
+          end;
+
+          if not Started then
+          begin
+            // Last-resort fallback: attempt normal start (may still fail under UAC/session rules).
+            Started := Exec(ExpandConstant('{sys}\explorer.exe'), '', '', SW_SHOWNORMAL, ewNoWait, ResultCode);
+          end;
+
+          if not Started then
+          begin
+            MsgBox(
+              'Explorer could not be restarted automatically.' + #13#10 + #13#10 +
+              'Fix: press Ctrl+Shift+Esc → Task Manager → Run new task → type: explorer.exe → OK.' + #13#10 + #13#10 +
+              'Error: ' + SysErrorMessage(ErrorCode),
+              mbError, MB_OK);
+          end;
+        end;
     end;
   end;
 end;

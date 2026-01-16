@@ -6,14 +6,16 @@ Add right-click context menu integration for your AI coding assistants. This too
 
 **Download the latest installer: [Releases](https://github.com/okz247/ai-context-tools/releases)**
 
-1. Download `ai-context-tools-setup-v1.0.0.exe`
-2. Run the installer
-3. Select which AI tools to integrate (Claude Code, Gemini, Codex)
-4. Done! Right-click any folder to open with your AI assistant
+1. Go to the **latest release** and look under **Assets**
+2. Download the Windows installer `.exe` (the filename looks like `ai-context-tools-setup-vX.Y.Z.exe`)
+3. Run the installer
+4. Select which AI tools to integrate (Claude Code, Gemini, Codex)
+5. Done! Right-click any folder to open with your AI assistant
 
 ### What This Does
 
 Once installed, you get instant access to your AI assistants:
+
 1. Right-click any folder in Windows Explorer
 2. Select "Open with Claude Code", "Open with Gemini CLI", or "Open with Codex"
 3. Your AI assistant launches in that folder
@@ -23,11 +25,13 @@ Once installed, you get instant access to your AI assistants:
 This repository includes two Claude Code implementations:
 
 **1. Windows Native (`claude-code/claude-code-windows/`)**
+
 - **Native Windows execution** - runs in cmd.exe or Windows Terminal
 - **No administrator privileges required** - installs to user profile (`%LOCALAPPDATA%`)
 - **Smart installer** - uses `smart-install.bat` to copy files to AppData
 
 **2. WSL Version (`claude-code/claude-code-wsl/`)**
+
 - **WSL execution** - launches Claude Code through Windows Subsystem for Linux
 - **Administrator required** - modifies system-wide registry
 - **Traditional installer** - uses `install.bat` and includes `uninstall.bat`
@@ -36,6 +40,7 @@ This repository includes two Claude Code implementations:
 ### Gemini CLI
 
 **Gemini CLI:**
+
 - **Administrator required** - modifies system-wide registry (`HKEY_CLASSES_ROOT`)
 - **PowerShell execution** - runs via PowerShell in Windows Terminal
 - **Traditional installer** - modifies registry to point to current location
@@ -45,7 +50,7 @@ This repository includes two Claude Code implementations:
 ✨ **Auto-Detection** - Automatically detects installed AI CLIs
 🎯 **Smart Installation** - Only installs context menus for tools you have
 🔧 **Easy Uninstall** - Clean removal with built-in uninstaller
-⚙️ **No Admin Required** - Claude Code (Windows Native) installs without admin rights
+⚙️ **No-Admin Option (Claude-only)** - Claude Code (Windows Native) can be installed per-user via `claude-code/claude-code-windows/smart-install.bat`
 🎨 **Custom Icons** - Each AI tool gets its own icon in the context menu
 📦 **Supports Multiple Tools** - Claude Code, Gemini, Codex all in one installer
 
@@ -54,6 +59,7 @@ This repository includes two Claude Code implementations:
 **Required:** Windows 10 or 11
 
 **AI Tools (install at least one):**
+
 - **Claude Code CLI**: `npm install -g @anthropic-ai/claude-code` (Node.js 18+)
 - **Gemini CLI**: Install from Gemini documentation
 - **Codex CLI**: Install from OpenAI/Codex documentation
@@ -62,13 +68,13 @@ This repository includes two Claude Code implementations:
 
 ### Method 1: Easy Installer (Recommended) ⭐
 
-1. **Download** the latest release:
-   [Get ai-context-tools-setup-v1.0.0.exe](https://github.com/okz247/ai-context-tools/releases)
+1. **Download** the installer from the latest release (under **Assets**):
+   [GitHub Releases](https://github.com/okz247/ai-context-tools/releases)
 
-2. **Run** the installer (may require administrator privileges)
+2. **Run** the installer (**administrator privileges required**)
 
 3. **Select** which AI tools to integrate:
-   - ✅ Claude Code (Windows Native) - No admin required
+   - ✅ Claude Code (Windows Native) - No WSL required
    - ✅ Claude Code (WSL) - For WSL users
    - ✅ Gemini CLI
    - ✅ Codex CLI
@@ -76,12 +82,23 @@ This repository includes two Claude Code implementations:
 4. **Done!** Right-click any folder to see your new AI assistant options
 
 The installer will:
+
 - Automatically detect which AI CLIs you have installed
 - Warn you if an AI tool isn't detected (you can still install the context menu for later)
 - Create proper registry entries
 - Optionally restart Windows Explorer to apply changes immediately
 
-### Method 2: Manual Installation (Advanced)
+### Method 2: No-Admin Install (Claude Code Windows Native only)
+
+If you only want Claude Code (Windows Native) and you don't want to run an administrator installer:
+
+1. Open `claude-code/claude-code-windows/`
+2. Double-click `smart-install.bat`
+3. Right-click a folder → **Open with Claude Code**
+
+To uninstall, run `smart-uninstall.bat`.
+
+### Method 3: Manual Installation (Advanced)
 
 1. **Navigate to Manual Install Folder**
    - For Claude Code Windows Native: Go to `claude-code/claude-code-windows/manual-install/`
@@ -98,13 +115,14 @@ The installer will:
    - Copy `install.reg.template` to `install.reg`
    - Replace `C:\\path\\to\\your\\folder` with your actual path (use double backslashes)
    - Double-click the edited `install.reg` file
-   
+
 4. **Apply Changes**
    - Approve security warnings and restart Explorer
 
 ## Uninstalling
 
 ### If Installed with Easy Installer
+
 1. Go to **Settings** → **Apps** → **Installed apps**
 2. Find "AI Context Menu Tools"
 3. Click **Uninstall**
@@ -112,6 +130,7 @@ The installer will:
 The uninstaller will remove all context menu entries and registry keys automatically.
 
 ### If Installed Manually
+
 - **For Claude Code Windows Native**: Run `smart-uninstall.bat` from the source folder
 - **For Claude Code WSL**: Right-click `uninstall.bat` and select **"Run as administrator"**
 - **For Gemini CLI**: Right-click `uninstall.bat` and select **"Run as administrator"**
@@ -120,14 +139,16 @@ The uninstaller will remove all context menu entries and registry keys automatic
 ## Troubleshooting
 
 ### Installation Issues
+
 - **"This app can't run on your PC"**: Right-click and choose "Run as administrator" (Gemini only)
 - **No menu appears**: Restart Windows Explorer or reboot your computer
-- **Moved folder after installation**: 
+- **Moved folder after installation**:
   - **Claude Code Windows Native**: No issue - files are copied to AppData
   - **Claude Code WSL**: Must reinstall from new location
   - **Gemini CLI**: Must reinstall from new location
 
-### Runtime Issues  
+### Runtime Issues
+
 - **"Claude Code not found"**: Verify Claude Code CLI is installed globally with npm (`claude --version`)
 - **"Gemini not found"**: Verify Gemini CLI is installed globally with npm
 

@@ -22,7 +22,11 @@ This document explains how to build the AI Context Tools installer executable.
 "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer\ai-context-tools.iss
 ```
 
-The compiled installer will be in `installer/output/ai-context-tools-setup-v1.0.0.exe`
+The compiled installer will be in `installer/output/` and will be named like:
+
+- `ai-context-tools-setup-vX.Y.Z.exe`
+
+(The version comes from `#define MyAppVersion` in `installer/ai-context-tools.iss`.)
 
 ## GitHub Actions (Automated)
 
