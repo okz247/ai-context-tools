@@ -8,3 +8,7 @@
 # OS
 .DS_Store
 Thumbs.db
+
+# Installer build output
+installer/output/
+*.exe
