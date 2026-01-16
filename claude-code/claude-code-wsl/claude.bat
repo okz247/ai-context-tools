@@ -36,5 +36,5 @@ if exist "%~1\" (
     echo In directory: %~dp1
     set "FILENAME=%~nx1"
     set "WSLENV=FILENAME/u"
-    start "Claude Code" wsl.exe --cd "%~dp1" -e bash -ic "claude \"Wait for my next command about \$FILENAME\" 2>/dev/null || (echo \"ERROR: Claude Code CLI not found. Please install Claude Code CLI in WSL.\"; echo \"Visit: https://docs.anthropic.com/en/docs/claude-code\"; read -p \"Press Enter to continue...\"); exec bash"
+    start "Claude Code" wsl.exe --cd "%~dp1" -e bash -ic "claude \"Wait for my next command about $FILENAME\" 2>/dev/null || (echo \"ERROR: Claude Code CLI not found. Please install Claude Code CLI in WSL.\"; echo \"Visit: https://docs.anthropic.com/en/docs/claude-code\"; read -p \"Press Enter to continue...\"); exec bash"
 )

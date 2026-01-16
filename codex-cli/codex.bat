@@ -19,7 +19,6 @@ if exist "%~1\" (
     REM It's a directory
     wt.exe -d "%~1" powershell.exe -NoExit -Command "codex"
 ) else (
-    REM It's a file - pass filename to Codex via environment variable for safety
-    set "FILENAME=%~nx1"
-    wt.exe -d "%~dp1" powershell.exe -NoExit -Command "codex \"Wait for my next command about $env:FILENAME\""
+    REM It's a file - pass filename directly as a PowerShell argument
+    wt.exe -d "%~dp1" powershell.exe -NoExit -Command "param([string]$fileName) codex ""Wait for my next command about $fileName""" "%~nx1"
 )

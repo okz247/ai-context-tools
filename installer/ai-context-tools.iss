@@ -8,7 +8,7 @@
 #define MyAppURL "https://github.com/okz247/ai-context-tools"
 
 [Setup]
-AppId={{B8F9A3D2-7E4C-4F1B-9A2D-8E3F5C6D7A1B}
+AppId={{B8F9A3D2-7E4C-4F1B-9A2D-8E3F5C6D7A1B}}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}

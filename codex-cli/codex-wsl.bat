@@ -38,11 +38,18 @@ for %%i in (a b c d e f g h i j k l m n o p q r s t u v w x y z) do (
     if /i "%DRIVE_LETTER%"=="%%i" set "WSL_PATH=/mnt/%%i%WSL_PATH:~6%"
 )
 
+REM Prepare WSLENV without clobbering existing mappings
+set "WSLENV_ENTRIES=WSL_PATH/u"
+if defined FILENAME set "WSLENV_ENTRIES=FILENAME/u:%WSLENV_ENTRIES%"
+if defined WSLENV (
+    set "WSLENV=%WSLENV%:%WSLENV_ENTRIES%"
+) else (
+    set "WSLENV=%WSLENV_ENTRIES%"
+)
+
 REM Launch Codex in WSL
 if defined FILENAME (
-    set "WSLENV=FILENAME/u:WSL_PATH/u"
     wsl.exe bash -c "cd \"$1\" && codex \"Wait for my next command about $2\"" bash "%WSL_PATH%" "%FILENAME%"
 ) else (
-    set "WSLENV=WSL_PATH/u"
     wsl.exe bash -c "cd \"$1\" && codex" bash "%WSL_PATH%"
 )
