@@ -43,6 +43,9 @@ Name: "codex_windows"; Description: "Codex CLI (Windows Native) - PowerShell exe
 Name: "codex_wsl"; Description: "Codex CLI (WSL) - For Windows Subsystem for Linux users"; Types: full
 
 [Files]
+; Always-installed generic icon for parent "AI Tools" menu
+Source: "..\gemini-cli\gemini.ico"; DestDir: "{app}"; DestName: "ai-tools.ico"; Flags: ignoreversion
+
 ; Claude Windows Native
 Source: "..\claude-code\claude-code-windows\claude.bat"; DestDir: "{app}\claude-windows"; Flags: ignoreversion; Components: claude_windows
 Source: "..\claude-code\claude-code-windows\claude.ico"; DestDir: "{app}\claude-windows"; Flags: ignoreversion; Components: claude_windows
@@ -53,6 +56,7 @@ Source: "..\claude-code\claude-code-wsl\claude.ico"; DestDir: "{app}\claude-wsl"
 
 ; Gemini Windows Native
 Source: "..\gemini-cli\gemini.ico"; DestDir: "{app}\gemini-windows"; Flags: ignoreversion; Components: gemini_windows
+Source: "..\gemini-cli\gemini.bat"; DestDir: "{app}\gemini-windows"; Flags: ignoreversion; Components: gemini_windows
 
 ; Gemini WSL
 Source: "..\gemini-cli\gemini-wsl.bat"; DestDir: "{app}\gemini-wsl"; Flags: ignoreversion; Components: gemini_wsl
@@ -71,7 +75,7 @@ Source: "..\codex-cli\codex.ico"; DestDir: "{app}\codex-wsl"; Flags: ignoreversi
 ; Create "AI Tools" parent menu for folders
 Root: HKCR; Subkey: "Directory\shell\AITools"; ValueType: string; ValueName: "MUIVerb"; ValueData: "AI Tools"; Flags: uninsdeletekey
 Root: HKCR; Subkey: "Directory\shell\AITools"; ValueType: string; ValueName: "SubCommands"; ValueData: ""
-Root: HKCR; Subkey: "Directory\shell\AITools"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-windows\claude.ico,0"
+Root: HKCR; Subkey: "Directory\shell\AITools"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\ai-tools.ico,0"
 
 ; Claude Code (Windows)
 Root: HKCR; Subkey: "Directory\shell\AITools\shell\ClaudeCode"; ValueType: string; ValueName: ""; ValueData: "Claude Code"; Components: claude_windows
@@ -86,7 +90,7 @@ Root: HKCR; Subkey: "Directory\shell\AITools\shell\ClaudeCodeWSL\command"; Value
 ; Gemini CLI (Windows)
 Root: HKCR; Subkey: "Directory\shell\AITools\shell\GeminiCLI"; ValueType: string; ValueName: ""; ValueData: "Gemini CLI"; Components: gemini_windows
 Root: HKCR; Subkey: "Directory\shell\AITools\shell\GeminiCLI"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\gemini-windows\gemini.ico,0"; Components: gemini_windows
-Root: HKCR; Subkey: "Directory\shell\AITools\shell\GeminiCLI\command"; ValueType: string; ValueName: ""; ValueData: "cmd.exe /c ""powershell.exe -NoExit -Command """"Set-Location -LiteralPath '%1'; gemini"""""""; Components: gemini_windows
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\GeminiCLI\command"; ValueType: string; ValueName: ""; ValueData: """{app}\gemini-windows\gemini.bat"" ""%1"""; Components: gemini_windows
 
 ; Gemini CLI (WSL)
 Root: HKCR; Subkey: "Directory\shell\AITools\shell\GeminiCLIWSL"; ValueType: string; ValueName: ""; ValueData: "Gemini CLI (WSL)"; Components: gemini_wsl
@@ -107,7 +111,7 @@ Root: HKCR; Subkey: "Directory\shell\AITools\shell\CodexWSL\command"; ValueType:
 ; Create "AI Tools" parent menu for folder backgrounds
 Root: HKCR; Subkey: "Directory\Background\shell\AITools"; ValueType: string; ValueName: "MUIVerb"; ValueData: "AI Tools"; Flags: uninsdeletekey
 Root: HKCR; Subkey: "Directory\Background\shell\AITools"; ValueType: string; ValueName: "SubCommands"; ValueData: ""
-Root: HKCR; Subkey: "Directory\Background\shell\AITools"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-windows\claude.ico,0"
+Root: HKCR; Subkey: "Directory\Background\shell\AITools"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\ai-tools.ico,0"
 
 ; Claude Code (Windows)
 Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\ClaudeCode"; ValueType: string; ValueName: ""; ValueData: "Claude Code"; Components: claude_windows
@@ -122,7 +126,7 @@ Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\ClaudeCodeWSL\comm
 ; Gemini CLI (Windows)
 Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\GeminiCLI"; ValueType: string; ValueName: ""; ValueData: "Gemini CLI"; Components: gemini_windows
 Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\GeminiCLI"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\gemini-windows\gemini.ico,0"; Components: gemini_windows
-Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\GeminiCLI\command"; ValueType: string; ValueName: ""; ValueData: "cmd.exe /c ""powershell.exe -NoExit -Command """"Set-Location -LiteralPath '%V'; gemini"""""""; Components: gemini_windows
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\GeminiCLI\command"; ValueType: string; ValueName: ""; ValueData: """{app}\gemini-windows\gemini.bat"" ""%V"""; Components: gemini_windows
 
 ; Gemini CLI (WSL)
 Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\GeminiCLIWSL"; ValueType: string; ValueName: ""; ValueData: "Gemini CLI (WSL)"; Components: gemini_wsl
@@ -143,7 +147,7 @@ Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\CodexWSL\command";
 ; Create "AI Tools" parent menu for files
 Root: HKCR; Subkey: "*\shell\AITools"; ValueType: string; ValueName: "MUIVerb"; ValueData: "AI Tools"; Flags: uninsdeletekey
 Root: HKCR; Subkey: "*\shell\AITools"; ValueType: string; ValueName: "SubCommands"; ValueData: ""
-Root: HKCR; Subkey: "*\shell\AITools"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-windows\claude.ico,0"
+Root: HKCR; Subkey: "*\shell\AITools"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\ai-tools.ico,0"
 
 ; Claude Code (Windows)
 Root: HKCR; Subkey: "*\shell\AITools\shell\ClaudeCode"; ValueType: string; ValueName: ""; ValueData: "Claude Code"; Components: claude_windows
@@ -158,7 +162,7 @@ Root: HKCR; Subkey: "*\shell\AITools\shell\ClaudeCodeWSL\command"; ValueType: st
 ; Gemini CLI (Windows)
 Root: HKCR; Subkey: "*\shell\AITools\shell\GeminiCLI"; ValueType: string; ValueName: ""; ValueData: "Gemini CLI"; Components: gemini_windows
 Root: HKCR; Subkey: "*\shell\AITools\shell\GeminiCLI"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\gemini-windows\gemini.ico,0"; Components: gemini_windows
-Root: HKCR; Subkey: "*\shell\AITools\shell\GeminiCLI\command"; ValueType: string; ValueName: ""; ValueData: "cmd.exe /c ""powershell.exe -NoExit -Command """"Set-Location -LiteralPath '%1'; gemini"""""""; Components: gemini_windows
+Root: HKCR; Subkey: "*\shell\AITools\shell\GeminiCLI\command"; ValueType: string; ValueName: ""; ValueData: """{app}\gemini-windows\gemini.bat"" ""%1"""; Components: gemini_windows
 
 ; Gemini CLI (WSL)
 Root: HKCR; Subkey: "*\shell\AITools\shell\GeminiCLIWSL"; ValueType: string; ValueName: ""; ValueData: "Gemini CLI (WSL)"; Components: gemini_wsl

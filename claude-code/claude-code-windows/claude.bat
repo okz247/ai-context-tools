@@ -53,17 +53,17 @@ if %errorlevel% equ 0 (
     if defined FILE_ARG (
         REM Pass filename to Claude via environment variable for safety
         set "FILENAME=%FILE_ARG%"
-        start "Claude Code" wt -d "%WORK_DIR%" cmd /k "claude \"Wait for my next command about %%FILENAME%%\""
+        start "Claude Code" wt -d "%WORK_DIR%" cmd /k "claude \"Wait for my next command about %%FILENAME%%\" || (echo. & echo ERROR: Failed to start Claude Code. & echo Make sure Claude Code CLI is installed and available in PATH. & pause)"
     ) else (
-        start "Claude Code" wt -d "%WORK_DIR%" cmd /k claude
+        start "Claude Code" wt -d "%WORK_DIR%" cmd /k "claude || (echo. & echo ERROR: Failed to start Claude Code. & echo Make sure Claude Code CLI is installed and available in PATH. & pause)"
     )
 ) else (
     REM Fall back to regular Command Prompt
     if defined FILE_ARG (
         REM Pass filename to Claude via environment variable for safety
         set "FILENAME=%FILE_ARG%"
-        start "Claude Code" cmd /k "cd /d "%WORK_DIR%" && claude \"Wait for my next command about %%FILENAME%%\""
+        start "Claude Code" cmd /k "cd /d ""%WORK_DIR%"" && claude \"Wait for my next command about %%FILENAME%%\" || (echo. & echo ERROR: Failed to start Claude Code. & echo Make sure Claude Code CLI is installed and available in PATH. & pause)"
     ) else (
-        start "Claude Code" cmd /k "cd /d "%WORK_DIR%" && claude"
+        start "Claude Code" cmd /k "cd /d ""%WORK_DIR%"" && claude || (echo. & echo ERROR: Failed to start Claude Code. & echo Make sure Claude Code CLI is installed and available in PATH. & pause)"
     )
 )
