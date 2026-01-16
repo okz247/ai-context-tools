@@ -1,1 +1,0 @@
-Test parameter: "%1"
