@@ -42,7 +42,13 @@ If Claude doesn't launch:
 ## Files
 
 - `claude.bat` - Main launcher script
+- `claude-or.bat` - OpenRouter launcher (expects a PowerShell `claude-or` function in your PowerShell profile)
 - `claude.ico` - Icon for context menu
 - `smart-install.bat` - Smart installation script (copies to AppData)
 - `smart-uninstall.bat` - Smart uninstallation script (removes from AppData)
 - `manual-install/` - Manual installation files for advanced users
+
+## Notes (OpenRouter / `claude-or`)
+
+- The right-click menu entry **"Claude Code - Openrouter"** runs `claude-or.bat`, which launches PowerShell and calls `claude-or`.
+- If you see `2147942402 (0x80070002)`, Windows is usually failing to launch the PowerShell command due to quoting/argument parsing in an outdated `claude-or.bat`. Fix by reinstalling the latest build or overwriting the installed `claude-or.bat` with the updated one from this repo.

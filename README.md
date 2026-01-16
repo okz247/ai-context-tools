@@ -27,8 +27,8 @@ This repository includes two Claude Code implementations:
 **1. Windows Native (`claude-code/claude-code-windows/`)**
 
 - **Native Windows execution** - runs in cmd.exe or Windows Terminal
-- **No administrator privileges required** - installs to user profile (`%LOCALAPPDATA%`)
-- **Smart installer** - uses `smart-install.bat` to copy files to AppData
+- **No administrator privileges required (Claude only)** - installs to user profile (`%LOCALAPPDATA%`) via `smart-install.bat`
+- **Admin installer option** - the main `.exe` installer can also install these launchers into `{Program Files}` and register context menus
 
 **2. WSL Version (`claude-code/claude-code-wsl/`)**
 
@@ -36,6 +36,14 @@ This repository includes two Claude Code implementations:
 - **Administrator required** - modifies system-wide registry
 - **Traditional installer** - uses `install.bat` and includes `uninstall.bat`
 - **For users who prefer WSL environment**
+
+### Claude Code - OpenRouter (`claude-or`)
+
+The **OpenRouter** variant is launched from the Windows context menu entry **"Claude Code - Openrouter"**.
+
+- **What it does**: runs your PowerShell `claude-or` function (from your PowerShell profile) inside the folder you clicked, so Claude Code routes through OpenRouter.
+- **Where it lives**: it runs an **installed copy** of `claude-or.bat` (not the repo folder you downloaded/ran the installer from).
+- **If you see `0x80070002`**: it usually means the installed `claude-or.bat` launcher is broken/mismatched—reinstall with the latest build or overwrite the installed `claude-or.bat` with the updated one from `claude-code/claude-code-windows/claude-or.bat`, then restart Explorer.
 
 ### Gemini CLI
 

@@ -70,14 +70,25 @@ if defined FILE_ARG (
     set "FILENAME=%FILE_ARG%"
 )
 
-set "PS_COMMAND=if (Test-Path $PROFILE) { . $PROFILE }; Set-Location -LiteralPath '%WORK_DIR%'; if ($env:FILENAME) { claude-or ('Wait for my next command about ' + $env:FILENAME) } else { claude-or }"
+REM Export values to PowerShell via env vars (avoid brittle quoting of Windows paths)
+set "CLAUDE_OR_WORK_DIR=%WORK_DIR%"
+set "CLAUDE_OR_FILENAME=%FILE_ARG%"
+
+REM Avoid -Command quoting issues by generating a temporary .ps1 script and running it with -File.
+set "PS_SCRIPT=%TEMP%\ai-context-tools-claude-or-%RANDOM%%RANDOM%.ps1"
+(
+echo if ^(Test-Path $PROFILE^) { . $PROFILE }
+echo Set-Location -LiteralPath $env:CLAUDE_OR_WORK_DIR
+echo if ^($env:CLAUDE_OR_FILENAME^) { claude-or ^('Wait for my next command about ' + $env:CLAUDE_OR_FILENAME^) } else { claude-or }
+) > "%PS_SCRIPT%"
 
 REM Launch Claude Code - Openrouter with file context (PowerShell)
 where wt >nul 2>nul
 if %errorlevel% equ 0 (
     REM Windows Terminal is available
-    start "Claude Code - Openrouter" wt -d "%WORK_DIR%" %PWSH_EXE% -NoExit -Command "%PS_COMMAND%"
+    REM Use "--" so wt stops parsing args and passes them to PowerShell reliably
+    start "Claude Code - Openrouter" wt -d "%WORK_DIR%" -- %PWSH_EXE% -NoExit -ExecutionPolicy Bypass -File "%PS_SCRIPT%"
 ) else (
     REM Fall back to regular PowerShell window
-    start "Claude Code - Openrouter" "%PWSH_EXE%" -NoExit -Command "%PS_COMMAND%"
+    start "Claude Code - Openrouter" "%PWSH_EXE%" -NoExit -ExecutionPolicy Bypass -File "%PS_SCRIPT%"
 )
