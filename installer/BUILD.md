@@ -61,6 +61,28 @@ Edit `installer/ai-context-tools.iss` to:
 - Customize UI text and dialogs
 - Modify installation paths
 
+## Customizing Icons
+
+### Parent "AI Tools" Menu Icon
+
+The icon for the "AI Tools" dropdown menu is `ai-tools.ico` in the repository root folder. It's configured at **line 47** of `ai-context-tools.iss`:
+
+```ini
+Source: "..\ai-tools.ico"; DestDir: "{app}"; Flags: ignoreversion
+```
+
+To change it, replace the `ai-tools.ico` file in the root folder with your custom icon.
+
+Registry entries at lines 78, 114, and 150 reference this icon as `{app}\ai-tools.ico,0`.
+
+### Individual Tool Icons
+
+Each AI tool has its own icon in the submenu, configured in the `[Files]` section:
+
+- **Claude Code**: `claude-code\claude-code-windows\claude.ico`
+- **Gemini CLI**: `gemini-cli\gemini.ico`
+- **Codex CLI**: `codex-cli\codex.ico`
+
 ## Testing
 
 After building:

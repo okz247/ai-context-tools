@@ -36,6 +36,7 @@ Name: "custom"; Description: "Custom installation"; Flags: iscustom
 
 [Components]
 Name: "claude_windows"; Description: "Claude Code (Windows Native) - No WSL required"; Types: full
+Name: "claude_or_windows"; Description: "Claude Code - Openrouter (Windows Native)"; Types: full
 Name: "claude_wsl"; Description: "Claude Code (WSL) - For Windows Subsystem for Linux users"; Types: full
 Name: "gemini_windows"; Description: "Gemini CLI (Windows Native) - PowerShell execution"; Types: full
 Name: "gemini_wsl"; Description: "Gemini CLI (WSL) - For Windows Subsystem for Linux users"; Types: full
@@ -44,11 +45,12 @@ Name: "codex_wsl"; Description: "Codex CLI (WSL) - For Windows Subsystem for Lin
 
 [Files]
 ; Always-installed generic icon for parent "AI Tools" menu
-Source: "..\claude-code\claude-code-windows\claude.ico"; DestDir: "{app}"; DestName: "ai-tools.ico"; Flags: ignoreversion
+Source: "..\ai-tools.ico"; DestDir: "{app}"; Flags: ignoreversion
 
 ; Claude Windows Native
 Source: "..\claude-code\claude-code-windows\claude.bat"; DestDir: "{app}\claude-windows"; Flags: ignoreversion; Components: claude_windows
-Source: "..\claude-code\claude-code-windows\claude.ico"; DestDir: "{app}\claude-windows"; Flags: ignoreversion; Components: claude_windows
+Source: "..\claude-code\claude-code-windows\claude-or.bat"; DestDir: "{app}\claude-windows"; Flags: ignoreversion; Components: claude_or_windows
+Source: "..\claude-code\claude-code-windows\claude.ico"; DestDir: "{app}\claude-windows"; Flags: ignoreversion; Components: claude_windows claude_or_windows
 
 ; Claude WSL
 Source: "..\claude-code\claude-code-wsl\claude.bat"; DestDir: "{app}\claude-wsl"; Flags: ignoreversion; Components: claude_wsl
@@ -81,6 +83,11 @@ Root: HKCR; Subkey: "Directory\shell\AITools"; ValueType: string; ValueName: "Ic
 Root: HKCR; Subkey: "Directory\shell\AITools\shell\ClaudeCode"; ValueType: string; ValueName: ""; ValueData: "Claude Code"; Components: claude_windows
 Root: HKCR; Subkey: "Directory\shell\AITools\shell\ClaudeCode"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-windows\claude.ico,0"; Components: claude_windows
 Root: HKCR; Subkey: "Directory\shell\AITools\shell\ClaudeCode\command"; ValueType: string; ValueName: ""; ValueData: """{app}\claude-windows\claude.bat"" ""%1"""; Components: claude_windows
+
+; Claude Code - Openrouter (Windows)
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\ClaudeCodeOpenrouter"; ValueType: string; ValueName: ""; ValueData: "Claude Code - Openrouter"; Components: claude_or_windows
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\ClaudeCodeOpenrouter"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-windows\claude.ico,0"; Components: claude_or_windows
+Root: HKCR; Subkey: "Directory\shell\AITools\shell\ClaudeCodeOpenrouter\command"; ValueType: string; ValueName: ""; ValueData: """{app}\claude-windows\claude-or.bat"" ""%1"""; Components: claude_or_windows
 
 ; Claude Code (WSL)
 Root: HKCR; Subkey: "Directory\shell\AITools\shell\ClaudeCodeWSL"; ValueType: string; ValueName: ""; ValueData: "Claude Code (WSL)"; Components: claude_wsl
@@ -118,6 +125,11 @@ Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\ClaudeCode"; Value
 Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\ClaudeCode"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-windows\claude.ico,0"; Components: claude_windows
 Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\ClaudeCode\command"; ValueType: string; ValueName: ""; ValueData: """{app}\claude-windows\claude.bat"" ""%V"""; Components: claude_windows
 
+; Claude Code - Openrouter (Windows)
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\ClaudeCodeOpenrouter"; ValueType: string; ValueName: ""; ValueData: "Claude Code - Openrouter"; Components: claude_or_windows
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\ClaudeCodeOpenrouter"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-windows\claude.ico,0"; Components: claude_or_windows
+Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\ClaudeCodeOpenrouter\command"; ValueType: string; ValueName: ""; ValueData: """{app}\claude-windows\claude-or.bat"" ""%V"""; Components: claude_or_windows
+
 ; Claude Code (WSL)
 Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\ClaudeCodeWSL"; ValueType: string; ValueName: ""; ValueData: "Claude Code (WSL)"; Components: claude_wsl
 Root: HKCR; Subkey: "Directory\Background\shell\AITools\shell\ClaudeCodeWSL"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-wsl\claude.ico,0"; Components: claude_wsl
@@ -154,6 +166,11 @@ Root: HKCR; Subkey: "*\shell\AITools\shell\ClaudeCode"; ValueType: string; Value
 Root: HKCR; Subkey: "*\shell\AITools\shell\ClaudeCode"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-windows\claude.ico,0"; Components: claude_windows
 Root: HKCR; Subkey: "*\shell\AITools\shell\ClaudeCode\command"; ValueType: string; ValueName: ""; ValueData: """{app}\claude-windows\claude.bat"" ""%1"""; Components: claude_windows
 
+; Claude Code - Openrouter (Windows)
+Root: HKCR; Subkey: "*\shell\AITools\shell\ClaudeCodeOpenrouter"; ValueType: string; ValueName: ""; ValueData: "Claude Code - Openrouter"; Components: claude_or_windows
+Root: HKCR; Subkey: "*\shell\AITools\shell\ClaudeCodeOpenrouter"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-windows\claude.ico,0"; Components: claude_or_windows
+Root: HKCR; Subkey: "*\shell\AITools\shell\ClaudeCodeOpenrouter\command"; ValueType: string; ValueName: ""; ValueData: """{app}\claude-windows\claude-or.bat"" ""%1"""; Components: claude_or_windows
+
 ; Claude Code (WSL)
 Root: HKCR; Subkey: "*\shell\AITools\shell\ClaudeCodeWSL"; ValueType: string; ValueName: ""; ValueData: "Claude Code (WSL)"; Components: claude_wsl
 Root: HKCR; Subkey: "*\shell\AITools\shell\ClaudeCodeWSL"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\claude-wsl\claude.ico,0"; Components: claude_wsl
@@ -182,6 +199,7 @@ Root: HKCR; Subkey: "*\shell\AITools\shell\CodexWSL\command"; ValueType: string;
 [Code]
 var
   ClaudeDetected: Boolean;
+  ClaudeORDetected: Boolean;
   GeminiDetected: Boolean;
   CodexDetected: Boolean;
   DetectionPage: TOutputMsgWizardPage;
@@ -216,6 +234,7 @@ var
 begin
   // Detect installed AI CLIs
   ClaudeDetected := CheckCommandExists('claude');
+  ClaudeORDetected := CheckCommandExists('claude-or');
   GeminiDetected := CheckCommandExists('gemini');
   CodexDetected := CheckCommandExists('codex');
 
@@ -226,6 +245,11 @@ begin
     DetectionMsg := DetectionMsg + '• Claude Code CLI: FOUND ✓' + #13#10
   else
     DetectionMsg := DetectionMsg + '• Claude Code CLI: NOT FOUND ✗' + #13#10;
+
+  if ClaudeORDetected then
+    DetectionMsg := DetectionMsg + '• Claude Code - Openrouter CLI: FOUND ✓' + #13#10
+  else
+    DetectionMsg := DetectionMsg + '• Claude Code - Openrouter CLI: NOT FOUND ✗' + #13#10;
 
   if GeminiDetected then
     DetectionMsg := DetectionMsg + '• Gemini CLI: FOUND ✓' + #13#10
@@ -267,6 +291,18 @@ begin
       if MsgBox('Claude Code CLI was not detected on your system. ' +
                 'The context menu will be created, but it will not work until you install Claude Code CLI.' + #13#10 + #13#10 +
                 'Install it with: npm install -g @anthropic-ai/claude-code' + #13#10 + #13#10 +
+                'Continue anyway?',
+                mbConfirmation, MB_YESNO) = IDNO then
+      begin
+        Result := False;
+        Exit;
+      end;
+    end;
+
+    if WizardIsComponentSelected('claude_or_windows') and not ClaudeORDetected then
+    begin
+      if MsgBox('claude-or CLI was not detected on your system. ' +
+                'The context menu will be created, but it will not work until you install claude-or.' + #13#10 + #13#10 +
                 'Continue anyway?',
                 mbConfirmation, MB_YESNO) = IDNO then
       begin
