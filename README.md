@@ -160,6 +160,16 @@ The uninstaller will remove all context menu entries and registry keys automatic
 - **"Claude Code not found"**: Verify Claude Code CLI is installed globally with npm (`claude --version`)
 - **"Gemini not found"**: Verify Gemini CLI is installed globally with npm
 
+### Preferred terminal
+
+Set a user env var to prefer a terminal when launching from the context menu (if it is on PATH):
+
+- `setx AI_CONTEXT_TOOLS_TERMINAL wezterm`
+- `setx AI_CONTEXT_TOOLS_TERMINAL alacritty`
+- `setx AI_CONTEXT_TOOLS_TERMINAL auto` (equivalent to leaving it unset; uses default terminal selection logic)
+- Restart Windows Explorer (or log off/on) so the context menu sees the new env var
+- If you installed via the `.exe` installer, reinstall or overwrite the installed `.bat` launchers to pick up updates, then restart Explorer
+
 ## Building the Installer (For Contributors)
 
 Want to build the installer yourself or contribute?

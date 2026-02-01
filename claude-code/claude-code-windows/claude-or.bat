@@ -83,6 +83,25 @@ echo if ^($env:CLAUDE_OR_FILENAME^) { claude-or ^('Wait for my next command abou
 ) > "%PS_SCRIPT%"
 
 REM Launch Claude Code - Openrouter with file context (PowerShell)
+if /i "%AI_CONTEXT_TOOLS_TERMINAL%"=="alacritty" (
+    where alacritty >nul 2>nul
+    if %errorlevel% equ 0 (
+        start "Claude Code - Openrouter" alacritty --working-directory "%WORK_DIR%" -T "Claude Code - Openrouter" -e %PWSH_EXE% -NoExit -ExecutionPolicy Bypass -File "%PS_SCRIPT%"
+        exit /b 0
+    )
+)
+if /i "%AI_CONTEXT_TOOLS_TERMINAL%"=="wezterm" (
+    where wezterm-gui >nul 2>nul
+    if %errorlevel% equ 0 (
+        start "Claude Code - Openrouter" wezterm-gui start --cwd "%WORK_DIR%" -- %PWSH_EXE% -NoExit -ExecutionPolicy Bypass -File "%PS_SCRIPT%"
+        exit /b 0
+    )
+    where wezterm >nul 2>nul
+    if %errorlevel% equ 0 (
+        start "Claude Code - Openrouter" wezterm start --cwd "%WORK_DIR%" -- %PWSH_EXE% -NoExit -ExecutionPolicy Bypass -File "%PS_SCRIPT%"
+        exit /b 0
+    )
+)
 where wt >nul 2>nul
 if %errorlevel% equ 0 (
     REM Windows Terminal is available

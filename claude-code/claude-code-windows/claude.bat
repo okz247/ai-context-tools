@@ -47,6 +47,43 @@ if exist "%~1\" (
 )
 
 REM Launch Claude Code with file context
+if /i "%AI_CONTEXT_TOOLS_TERMINAL%"=="alacritty" (
+    where alacritty >nul 2>nul
+    if %errorlevel% equ 0 (
+        if defined FILE_ARG (
+            REM Pass filename to Claude via environment variable for safety
+            set "FILENAME=%FILE_ARG%"
+            start "Claude Code" alacritty --working-directory "%WORK_DIR%" -T "Claude Code" -e cmd.exe /k "claude \"Wait for my next command about %%FILENAME%%\" || (echo. & echo ERROR: Failed to start Claude Code. & echo Make sure Claude Code CLI is installed and available in PATH. & pause)"
+        ) else (
+            start "Claude Code" alacritty --working-directory "%WORK_DIR%" -T "Claude Code" -e cmd.exe /k "claude || (echo. & echo ERROR: Failed to start Claude Code. & echo Make sure Claude Code CLI is installed and available in PATH. & pause)"
+        )
+        exit /b 0
+    )
+)
+if /i "%AI_CONTEXT_TOOLS_TERMINAL%"=="wezterm" (
+    where wezterm-gui >nul 2>nul
+    if %errorlevel% equ 0 (
+        if defined FILE_ARG (
+            REM Pass filename to Claude via environment variable for safety
+            set "FILENAME=%FILE_ARG%"
+            start "Claude Code" wezterm-gui start --cwd "%WORK_DIR%" -- cmd.exe /k "claude \"Wait for my next command about %%FILENAME%%\" || (echo. & echo ERROR: Failed to start Claude Code. & echo Make sure Claude Code CLI is installed and available in PATH. & pause)"
+        ) else (
+            start "Claude Code" wezterm-gui start --cwd "%WORK_DIR%" -- cmd.exe /k "claude || (echo. & echo ERROR: Failed to start Claude Code. & echo Make sure Claude Code CLI is installed and available in PATH. & pause)"
+        )
+        exit /b 0
+    )
+    where wezterm >nul 2>nul
+    if %errorlevel% equ 0 (
+        if defined FILE_ARG (
+            REM Pass filename to Claude via environment variable for safety
+            set "FILENAME=%FILE_ARG%"
+            start "Claude Code" wezterm start --cwd "%WORK_DIR%" -- cmd.exe /k "claude \"Wait for my next command about %%FILENAME%%\" || (echo. & echo ERROR: Failed to start Claude Code. & echo Make sure Claude Code CLI is installed and available in PATH. & pause)"
+        ) else (
+            start "Claude Code" wezterm start --cwd "%WORK_DIR%" -- cmd.exe /k "claude || (echo. & echo ERROR: Failed to start Claude Code. & echo Make sure Claude Code CLI is installed and available in PATH. & pause)"
+        )
+        exit /b 0
+    )
+)
 where wt >nul 2>nul
 if %errorlevel% equ 0 (
     REM Windows Terminal is available

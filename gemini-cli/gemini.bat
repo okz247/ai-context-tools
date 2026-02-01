@@ -37,10 +37,28 @@ if exist "%~1\" (
 )
 
 REM Launch Gemini in a new terminal window, in the chosen directory
+if /i "%AI_CONTEXT_TOOLS_TERMINAL%"=="alacritty" (
+    where alacritty >nul 2>nul
+    if %errorlevel% equ 0 (
+        start "Gemini CLI" alacritty --working-directory "%WORK_DIR%" -T "Gemini CLI" -e powershell.exe -NoExit -Command "gemini"
+        exit /b 0
+    )
+)
+if /i "%AI_CONTEXT_TOOLS_TERMINAL%"=="wezterm" (
+    where wezterm-gui >nul 2>nul
+    if %errorlevel% equ 0 (
+        start "Gemini CLI" wezterm-gui start --cwd "%WORK_DIR%" -- powershell.exe -NoExit -Command "gemini"
+        exit /b 0
+    )
+    where wezterm >nul 2>nul
+    if %errorlevel% equ 0 (
+        start "Gemini CLI" wezterm start --cwd "%WORK_DIR%" -- powershell.exe -NoExit -Command "gemini"
+        exit /b 0
+    )
+)
 where wt >nul 2>nul
 if %errorlevel% equ 0 (
     start "Gemini CLI" wt -d "%WORK_DIR%" powershell.exe -NoExit -Command "gemini"
 ) else (
     start "Gemini CLI" powershell.exe -NoExit -Command "Set-Location -LiteralPath ""%WORK_DIR%""; gemini"
 )
-

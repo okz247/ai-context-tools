@@ -9,6 +9,16 @@ This tool adds "Open with Claude Code" to the Windows context menu, allowing you
 - **Easy Installation**: Run `smart-install.bat` (no admin required!)
 - **Clean Uninstallation**: Run `smart-uninstall.bat` (no admin required!)
 
+## Preferred terminal
+
+Set a user env var to prefer a terminal for context-menu launches (if it is on PATH):
+
+- `setx AI_CONTEXT_TOOLS_TERMINAL wezterm`
+- `setx AI_CONTEXT_TOOLS_TERMINAL alacritty`
+- `setx AI_CONTEXT_TOOLS_TERMINAL auto` (equivalent to leaving it unset; uses default terminal selection logic)
+- Restart Windows Explorer (or log off/on) so the context menu sees the new env var
+- If you installed via the `.exe` installer, reinstall or overwrite the installed `.bat` launchers to pick up updates, then restart Explorer
+
 ## Requirements
 
 - Windows 10 or Windows 11

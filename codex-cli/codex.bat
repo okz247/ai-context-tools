@@ -27,6 +27,37 @@ if exist "%~1\" (
 )
 
 REM Launch Codex in Windows Terminal if available, otherwise fallback
+if /i "%AI_CONTEXT_TOOLS_TERMINAL%"=="alacritty" (
+    where alacritty >nul 2>nul
+    if %errorlevel% equ 0 (
+        if defined FILE_NAME (
+            start "Codex" alacritty --working-directory "%WORK_DIR%" -T "Codex" -e powershell.exe -NoExit -Command "param([string]$fileName) codex ""Wait for my next command about $fileName""" "%FILE_NAME%"
+        ) else (
+            start "Codex" alacritty --working-directory "%WORK_DIR%" -T "Codex" -e powershell.exe -NoExit -Command "codex"
+        )
+        exit /b 0
+    )
+)
+if /i "%AI_CONTEXT_TOOLS_TERMINAL%"=="wezterm" (
+    where wezterm-gui >nul 2>nul
+    if %errorlevel% equ 0 (
+        if defined FILE_NAME (
+            start "Codex" wezterm-gui start --cwd "%WORK_DIR%" -- powershell.exe -NoExit -Command "param([string]$fileName) codex ""Wait for my next command about $fileName""" "%FILE_NAME%"
+        ) else (
+            start "Codex" wezterm-gui start --cwd "%WORK_DIR%" -- powershell.exe -NoExit -Command "codex"
+        )
+        exit /b 0
+    )
+    where wezterm >nul 2>nul
+    if %errorlevel% equ 0 (
+        if defined FILE_NAME (
+            start "Codex" wezterm start --cwd "%WORK_DIR%" -- powershell.exe -NoExit -Command "param([string]$fileName) codex ""Wait for my next command about $fileName""" "%FILE_NAME%"
+        ) else (
+            start "Codex" wezterm start --cwd "%WORK_DIR%" -- powershell.exe -NoExit -Command "codex"
+        )
+        exit /b 0
+    )
+)
 where wt >nul 2>nul
 if %errorlevel% equ 0 (
     if defined FILE_NAME (
